@@ -18,10 +18,10 @@ class ObjectDisplay
         @selected_tile = @args.state.new_entity(:selected_tile)
         @selected_tile.value = nil
         @selected_tile.gui.position = {x: 0, y: 0}
-        @selected_tile.gui.overlay_border = {w: @tile_size, h: @tile_size, r: 255, g: 255, b: 255}.to_border
-        @selected_tile.gui.overlay = {w: @tile_size, h: @tile_size, r: 0, g: 0, b: 0, a: 75}.to_solid
-        @selected_tile.gui.selected.overlay_border = {w: @tile_size, h: @tile_size, r: 255, g: 255, b: 255}.to_border
-        @selected_tile.gui.selected.overlay = {w: @tile_size, h: @tile_size, r: 128, g: 0, b: 0, a: 75}.to_solid
+        @selected_tile.gui.overlay_border = {w: @tile_size, h: @tile_size, **Color::WHITE, primitive_marker: :border}
+        @selected_tile.gui.overlay = {w: @tile_size, h: @tile_size, **Color::BLACK, a: 75, primitive_marker: :solid}
+        @selected_tile.gui.selected.overlay_border = {w: @tile_size, h: @tile_size, **Color::WHITE, primitive_marker: :border}
+        @selected_tile.gui.selected.overlay = {w: @tile_size, h: @tile_size, **Color::MAROON, a: 75, primitive_marker: :solid}
         @selected_tile.gui.selected.locked = false
     end
 

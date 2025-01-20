@@ -7,12 +7,12 @@ class BombFire < GridObject
   def initialize(args, x, y, meta_data = {})
     super(args, x, y, 32, 32, meta_data)
 
-    @sprite_path = "sprites/Flame/Flame_F00.png"
+    @sprite_path = "sprites/flame/flame_f00.png"
     @solid = true
     @type = :BombFire
     @frames = []
     (0..4).each do | index |
-      @frames << "sprites/Flame/Flame_F#{"%02d" % index}.png"
+      @frames << "sprites/flame/flame_f#{"%02d" % index}.png"
     end
         
     @animation = {

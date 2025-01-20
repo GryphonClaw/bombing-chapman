@@ -46,7 +46,7 @@ class GridObject
 
   def draw
     puts "GridObject::draw - Override me for custom drawing."
-    output = {x: @x, y: @y, w: 32, h: 32, path: @path, **@color_tint}.to_sprite
+    output = {x: @x, y: @y, w: 32, h: 32, path: @path, **@color_tint.to_sprite}
     output
   end
 

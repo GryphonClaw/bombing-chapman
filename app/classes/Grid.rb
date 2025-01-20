@@ -111,7 +111,7 @@ class Grid
             @cell_count_y.times do | y |
                 if cell_occupied?(x, y)
                     obj = get_cell(x, y)
-                    list << obj.position.merge({w: 32, h: 32}).merge(object_rect_color(obj)).to_border
+                    list << obj.position.merge({w: 32, h: 32}).merge({**object_rect_color(obj), primitive_marker: :border})
                 end
             end
         end
