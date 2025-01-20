@@ -15,7 +15,7 @@ class Brick < GridObject
 
     def draw
         output = []
-        output << rect.merge({**@color_tint, path: @sprite_path}).to_sprite
+        output << rect.merge({**@color_tint, path: @sprite_path, primitive_marker: :sprite})
         #only add thiis to the output if we are in the editor
         if in_editor()
             #only add to output if in editor and has a power up

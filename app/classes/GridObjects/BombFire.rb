@@ -24,7 +24,7 @@ class BombFire < GridObject
     @ttl = 30
     @should_die = false
     @current_frame = 0
-    @sprite_settings = {w: 32, h: 32, tile_x: 0, tile_y: 0, tile_w: 48, tile_h: 48}.to_sprite
+    @sprite_settings = {w: 32, h: 32, tile_x: 0, tile_y: 0, tile_w: 48, tile_h: 48, primitive_marker: :sprite}
   end
 
     def rect
@@ -65,7 +65,7 @@ class BombFire < GridObject
     end
 
     def draw()
-        sprite = position.merge({path: @sprite_path}).merge(@sprite_settings).to_sprite
+        sprite = position.merge({path: @sprite_path, **@sprite_settings})
         debug = {x: @x + 12, y: @y + 20, text: "#{(@ttl/60).to_i}", alignment_enum: 1, **Color::BLUE}
 
         sprite

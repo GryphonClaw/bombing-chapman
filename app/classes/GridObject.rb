@@ -46,7 +46,7 @@ class GridObject
 
   def draw
     puts "GridObject::draw - Override me for custom drawing."
-    output = {x: @x, y: @y, w: 32, h: 32, path: @path, **@color_tint.to_sprite}
+    output = {x: @x, y: @y, w: 32, h: 32, path: @path, **@color_tint, primitive_marker: :sprite}
     output
   end
 
@@ -99,19 +99,19 @@ class GridObject
     if powerup
       case @args.state.settings.tile_embed_type
       when :centered
-        output << {x: @x + 4, y: @y + 4, w: 24, h: 24, path: powerup, a: 128}.to_sprite
+        output << {x: @x + 4, y: @y + 4, w: 24, h: 24, path: powerup, a: 128, primitive_marker: :sprite}
       when :full
-        output << {x: @x, y: @y, w: 32, h: 32, path: powerup, a: 128}.to_sprite
+        output << {x: @x, y: @y, w: 32, h: 32, path: powerup, a: 128, primitive_marker: :sprite}
       when :quarter_bl
-        output << {x: @x, y: @y, w: 16, h: 16, path: powerup, a: 128}.to_sprite
+        output << {x: @x, y: @y, w: 16, h: 16, path: powerup, a: 128, primitive_marker: :sprite}
       when :quarter_br
-        output << {x: @x + 16, y: @y, w: 16, h: 16, path: powerup, a: 128}.to_sprite
+        output << {x: @x + 16, y: @y, w: 16, h: 16, path: powerup, a: 128, primitive_marker: :sprite}
       when :quarter_tl
-        output << {x: @x, y: @y + 16, w: 16, h: 16, path: powerup, a: 128}.to_sprite
+        output << {x: @x, y: @y + 16, w: 16, h: 16, path: powerup, a: 128, primitive_marker: :sprite}
       when :quarter_tr
-        output << {x: @x + 16, y: @y +16, w: 16, h: 16, path: powerup, a: 128}.to_sprite
+        output << {x: @x + 16, y: @y +16, w: 16, h: 16, path: powerup, a: 128, primitive_marker: :sprite}
       else
-        output << {x: @x, y: @y, w: 32, h: 32, path: powerup, a: 128}.to_sprite
+        output << {x: @x, y: @y, w: 32, h: 32, path: powerup, a: 128, primitive_marker: :sprite}
       end
     end
     output

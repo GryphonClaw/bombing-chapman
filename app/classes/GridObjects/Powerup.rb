@@ -47,7 +47,7 @@ class Powerup < GridObject
     end
 
     def draw
-        position.merge(@@types[@type]).to_sprite
+        position.merge({**@@types[@type], primitive_marker: :sprite})
     end
 
     def position

@@ -36,7 +36,7 @@ class Block < GridObject
 
     def draw
         output = []
-        output << {x: @x, y: @y, w: 32, h: 32, path: @sprite_path}.to_sprite
+        output << {x: @x, y: @y, w: 32, h: 32, path: @sprite_path, primitive_marker: :sprite}
         if in_editor()
             #only add to output if in editor and has a power up
             if has_powerup()

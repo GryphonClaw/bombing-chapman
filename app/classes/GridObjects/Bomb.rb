@@ -75,10 +75,7 @@ class Bomb < GridObject
 
         ttl = (@ttl/60).round
         ttl_str = ttl > 0 ? "#{ttl}" : "BOOM"
-        count_down_timer_display = {
-            x: x + 16, y: y + 16, text: "#{ttl_str}",
-            **Color::WHITE, alignment_enum: 1
-        }.to_label
+        count_down_timer_display = {x: x + 16, y: y + 16, text: "#{ttl_str}", **Color::WHITE, alignment_enum: 1, primitive_marker: :label}
         [output.to_sprite,
             count_down_timer_display]
     end

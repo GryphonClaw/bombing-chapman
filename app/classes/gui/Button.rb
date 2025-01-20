@@ -23,12 +23,12 @@ class Button
 
   def draw()
     output = []
-    output << {**rect, **bg_color}.to_solid
+    output << {**rect, **bg_color, primitive_marker: :solid}
 
     text_w, text_h =  $gtk.calcstringbox(@text)
 
-    output << {x: @x + ((@width / 2) - (text_w/2)), y: @y + ((text_h)), text: @text, **label_color}.to_label
-    output << {**rect, **outline_color}.to_border
+    output << {x: @x + ((@width / 2) - (text_w/2)), y: @y + ((text_h)), text: @text, **label_color, primitive_marker: :label}
+    output << {**rect, **outline_color, primitive_marker: :border}
     @args.outputs.primitives << output
   end
 

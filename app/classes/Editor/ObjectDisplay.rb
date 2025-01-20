@@ -64,6 +64,7 @@ class ObjectDisplay
             end
         else
             @selected_tile.gui.position = {x: -128, y: -128}
+
         end
     end
 
@@ -75,8 +76,8 @@ class ObjectDisplay
 
         items_to_draw << border_rect
 
-        items_to_draw << @selected_tile.gui.overlay.merge(@selected_tile.gui.position).to_solid
-        items_to_draw << @selected_tile.gui.overlay_border.merge(@selected_tile.gui.position).to_border
+        items_to_draw << @selected_tile.gui.overlay.merge({**@selected_tile.gui.position, primitive_marker: :solid})
+        items_to_draw << @selected_tile.gui.overlay_border.merge({**@selected_tile.gui.position, primitive_marker: :border})
         
         if @selected_tile.gui.selected.locked
             items_to_draw << @selected_tile.gui.selected.overlay.to_solid
@@ -98,8 +99,8 @@ class ObjectDisplay
         selected = {x: border.x, y: border.y}
 
         border_items << @selected_tile.gui.selected.overlay_border.to_border
-        border_items << @selected_tile.gui.selected.overlay_border.merge({x: selected.x + 1, y: selected.y + 1, w: border.w - 2, h: border.h - 2}).to_border
-        border_items << @selected_tile.gui.selected.overlay_border.merge({x: selected.x + 2, y: selected.y + 2, w: border.w - 4, h: border.h - 4}).to_border
+        border_items << @selected_tile.gui.selected.overlay_border.merge({x: selected.x + 1, y: selected.y + 1, w: border.w - 2, h: border.h - 2, primitive_marker: :border})
+        border_items << @selected_tile.gui.selected.overlay_border.merge({x: selected.x + 2, y: selected.y + 2, w: border.w - 4, h: border.h - 4, primitive_marker: :border})
 
 
         border_items
@@ -109,7 +110,7 @@ class ObjectDisplay
     def border_rect
         width = @tile_size * @tile_grid[0].length
         height = @tile_size * @tile_grid.length
-        {x: @x, y: @y, w: width, h: height, **Color::WHITE}.to_border
+        {x: @x, y: @y, w: width, h: height, **Color::WHITE, primitive_marker: :border}
     end
 
     private
@@ -120,41 +121,41 @@ class ObjectDisplay
         rect.w = rect.w - 2
         rect.h = rect.h - 2
 
-        {**rect, **Color::GREENYELLOW}.to_border
+        {**rect, **Color::GREENYELLOW, primitive_marker: :border}
     end
 
     private
     def background
-        {x: @x, y: @y, w: @tile_size * 3, h: @tile_size * 5, **Color::ORANGE}.to_solid
+        {x: @x, y: @y, w: @tile_size * 3, h: @tile_size * 5, **Color::ORANGE, primitive_marker: :solid}
     end
 
     private
     def tile_gfx_for_name tile
         case tile
         when "Block:Explodable"
-            {w: @tile_size, h: @tile_size, path: "sprites/block_explodable.png"}.to_sprite
+            {w: @tile_size, h: @tile_size, path: "sprites/block_explodable.png", primitive_marker: :sprite}
         when "Block:Solid"
-            {w: @tile_size, h: @tile_size, path: "sprites/block_solid.png"}.to_sprite
+            {w: @tile_size, h: @tile_size, path: "sprites/block_solid.png", primitive_marker: :sprite}
         when "Powerup:SpeedUp"
-            {w: @tile_size, h: @tile_size, path: "sprites/speed_up.png"}.to_sprite
+            {w: @tile_size, h: @tile_size, path: "sprites/speed_up.png", primitive_marker: :sprite}
         when "Powerup:FlameUp"
-            {w: @tile_size, h: @tile_size, path: "sprites/explosion_up.png"}.to_sprite
+            {w: @tile_size, h: @tile_size, path: "sprites/explosion_up.png", primitive_marker: :sprite}
         when "Powerup:BombUp"
-            {w: @tile_size, h: @tile_size, path: "sprites/bomb_capacity_up.png"}.to_sprite
+            {w: @tile_size, h: @tile_size, path: "sprites/bomb_capacity_up.png", primitive_marker: :sprite}
         when "Bomb"
-            {w: @tile_size, h: @tile_size, tile_x: 0, tile_y: 0, tile_w: 32, tile_h: 32, path: "sprites/bomb.png"}.to_sprite
+            {w: @tile_size, h: @tile_size, tile_x: 0, tile_y: 0, tile_w: 32, tile_h: 32, path: "sprites/bomb.png", primitive_marker: :sprite}
         when "Brick:Green"
-            {w: @tile_size, h: @tile_size, path: "sprites/brick.png", **Color::GREEN}.to_sprite
+            {w: @tile_size, h: @tile_size, path: "sprites/brick.png", **Color::GREEN, primitive_marker: :sprite}
         when "Brick:Yellow"
-            {w: @tile_size, h: @tile_size, path: "sprites/brick.png", **Color::YELLOW}.to_sprite
+            {w: @tile_size, h: @tile_size, path: "sprites/brick.png", **Color::YELLOW, primitive_marker: :sprite}
         when "Brick:Red"
-            {w: @tile_size, h: @tile_size, path: "sprites/brick.png", **Color::RED}.to_sprite
+            {w: @tile_size, h: @tile_size, path: "sprites/brick.png", **Color::RED, primitive_marker: :sprite}
         when "Brick:Blue"
-            {w: @tile_size, h: @tile_size, path: "sprites/brick.png", **Color::BLUE}.to_sprite
+            {w: @tile_size, h: @tile_size, path: "sprites/brick.png", **Color::BLUE, primitive_marker: :sprite}
         when "Player"
-            {w: @tile_size, h: @tile_size, tile_x: 0, tile_y: 64, tile_w: 32, tile_h: 32, path: "sprites/bomberman2.png"}.to_sprite
+            {w: @tile_size, h: @tile_size, tile_x: 0, tile_y: 64, tile_w: 32, tile_h: 32, path: "sprites/bomberman2.png", primitive_marker: :sprite}
         else
-            {w: @tile_size, h: @tile_size, **Color::BROWN}.to_solid
+            {w: @tile_size, h: @tile_size, **Color::BROWN, primitive_marker: :solid}
         end
     end
 

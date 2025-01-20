@@ -9,7 +9,7 @@ class ImageButton
     @text = label
     @callback = callback
 
-    @image = {x: @x, y: @y, w: @width, h: @height, path: image_path}#.to_sprite
+    @image = {x: @x, y: @y, w: @width, h: @height, path: image_path, primitive_marker: :sprite}
 
     @enabled = enabled
     @mouse_entered = false
@@ -25,17 +25,17 @@ class ImageButton
 
   def draw()
     output = []
-    output << {**rect, **bg_color}.to_solid
+    output << {**rect, **bg_color, primitive_marker: :solid}
 
     text_w, text_h =  $gtk.calcstringbox(@text)
 
     output << @image
-    output << {x: @x + ((@width / 2) - (text_w/2)), y: @y + ((text_h)), text: @text, **label_color}.to_label
+    output << {x: @x + ((@width / 2) - (text_w/2)), y: @y + ((text_h)), text: @text, **label_color, primitive_marker: :label}
 
-    output << {**rect, **outline_color}.to_border
+    output << {**rect, **outline_color, primitive_marker: :border}
 
     if mouse_entered
-      output << {x: @x, y: @y, w: @width, h: @height, **Color::WHITE}.merge({a: 25}).to_solid
+      output << {x: @x, y: @y, w: @width, h: @height, **Color::WHITE}.merge({a: 25, primitive_marker: :solid})
     end
 
     @args.outputs.primitives << output
