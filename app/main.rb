@@ -36,7 +36,7 @@ def tick args
 end
 
 def set_background_color(args)
-  args.outputs.background_color = [0, 0, 0, 255]
+  args.outputs.background_color = {r: 0, g: 0, b: 0}
 end
 
 $gtk.reset_next_tick

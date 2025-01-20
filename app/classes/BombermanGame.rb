@@ -252,7 +252,7 @@ class BombermanGame
 
   def draw_template_backdrop
     return unless @editor.gui.show_template_buttons
-    @args.outputs.primitives << {x: 64, y: 64, w: 864, h: 640, **Color::BLUE}.merge({a: 32}).to_solid
+    @args.outputs.primitives << {x: 64, y: 64, w: 864, h: 640, **Color::BLUE, a: 32, primitive_marker: :solid}
   end
 
   def draw_edit_mode_gui
@@ -270,7 +270,7 @@ class BombermanGame
         button.draw()
       end
 
-      @args.outputs.primitives << {x: 96, y: 96, w: 32*25, h: 96, **Color::BLACK}.merge({a: 128}).to_solid
+      @args.outputs.primitives << {x: 96, y: 96, w: 32*25, h: 96, **Color::BLACK, a: 128, primitive_marker: :solid}
       @args.outputs.primitives << @editor.gui.templates_warning
       @args.outputs.primitives << @editor.gui.templates_warning2
     end
@@ -289,13 +289,13 @@ class BombermanGame
 
   def show_mode()
     mode_string = get_mode_string()
-    mode_label = {x: 15, y: 720 - 10, text: mode_string, size_enum: -4, **Color::WHITE}.to_label
+    mode_label = {x: 15, y: 720 - 10, text: mode_string, size_enum: -4, **Color::WHITE, primitive_marker: :label}
     @args.outputs.labels << mode_label
   end
 
   def draw_debug_rects()
-    @args.outputs.primitives << @grid.boundary_rect.merge(Color::WHITE).to_border
-    @args.outputs.primitives << @the_player.collision_rect.merge(Color::WHITE).to_border
+    @args.outputs.primitives << @grid.boundary_rect.merge({**Color::WHITE, primitive_marker: :border})
+    @args.outputs.primitives << @the_player.collision_rect.merge({**Color::WHITE, primitive_marker: :border})
 
     @args.outputs.primitives << @grid.objects
   end
@@ -330,9 +330,9 @@ class BombermanGame
     @args.outputs.labels << hud_labels
 
     def get_sound_image
-        @args.state.settings.play_sounds ? "sounds on4" : "sounds off4"
+        @args.state.settings.play_sounds ? "sounds_on4" : "sounds_off4"
     end
-    @args.outputs.primitives << {x: 950, y: 64, w: 64, h: 64, **Color::GREEN, path: "sprites/#{get_sound_image()}.png"}.to_sprite
+    @args.outputs.primitives << {x: 950, y: 64, w: 64, h: 64, **Color::GREEN, path: "sprites/#{get_sound_image()}.png", primitive_marker: :sprite}
 
     show_mode()
   end
@@ -367,6 +367,8 @@ class BombermanGame
 
   def process_input()
     if @args.inputs.keyboard.key_down.tab
+      puts "BombermanGame - process_input:Key Down::Tab"
+      puts "  Toggle Mode"
       toggle_mode()
     end
   end
@@ -508,7 +510,7 @@ class BombermanGame
     return unless mouse.has_focus
     overlay = {r: 255, g: 255, b: 255, a: 128}
 
-    grid_position_label = {x: @offset_x, y: 30, text: "#{grid_x}, #{grid_y}", size_enum: -3, **Color::WHITE}.to_label
+    grid_position_label = {x: @offset_x, y: 30, text: "#{grid_x}, #{grid_y}", size_enum: -3, **Color::WHITE, primitive_marker: :label}
     
     position = {
       x: ((mouse.x).idiv(32) * 32),
@@ -529,11 +531,11 @@ class BombermanGame
     info_background_w = (info_title_w > cell_info_w) ? (info_title_w + 10) : (cell_info_w + 10)
     info_background_h = 60
     
-    hover_tile_info = {x: mouse.x + 16, y: mouse.y - 12, text: cell_info_text, size_enum: -3, **Color::WHITE}.to_label
-    position_info_label = {x: mouse.x + 16, y: mouse.y - 28 , text: position_text, size_enum: -3, **Color::WHITE}.to_label
+    hover_tile_info = {x: mouse.x + 16, y: mouse.y - 12, text: cell_info_text, size_enum: -3, **Color::WHITE, primitive_marker: :label}
+    position_info_label = {x: mouse.x + 16, y: mouse.y - 28 , text: position_text, size_enum: -3, **Color::WHITE, primitive_marker: :label}
     
-    position_info_label_background = {x: mouse.x + 12, y: mouse.y - 50, w: info_background_w, h: info_background_h, **Color::LIGHTSLATEGREY}.to_solid
-    info_line = {x: mouse.x + 16, y: mouse.y - 8, x2: mouse.x + info_background_w + 8, y2: mouse.y - 8, **Color::WHITE}.to_line
+    position_info_label_background = {x: mouse.x + 12, y: mouse.y - 50, w: info_background_w, h: info_background_h, **Color::LIGHTSLATEGREY, primitive_marker: :solid}
+    info_line = {x: mouse.x + 16, y: mouse.y - 8, x2: mouse.x + info_background_w + 8, y2: mouse.y - 8, **Color::WHITE, primitive_marker: :line}
     graphic = @editor.gui.tile_graphic.merge({w: 32, h: 32})
     ghost_tile = {**position, **graphic, **overlay}#position.merge(graphic).merge(overlay)
     info_title = {x: mouse.x + 16, y: mouse.y + 8, text: info_title_text, size_enum: -2, **Color::WHITE}
@@ -779,7 +781,7 @@ class BombermanGame
         cell_obj = @grid.get_cell(x_pos, y_pos)
         rect_color = cell_obj != nil ? Color::BLACK.merge({a: alpha}) : Color::RED.merge({a: alpha})
         draw_pos = {x: (x_pos * 32) + @grid.draw_offset.x , y: (y_pos * 32) + @grid.draw_offset.y}
-        debug_rects <<  {**draw_pos, w: 32, h: 32, r: 255, **rect_color}.to_solid
+        debug_rects <<  {**draw_pos, w: 32, h: 32, r: 255, **rect_color, primitive_marker: :solid}
       end
     end
     @args.outputs.primitives << debug_rects
@@ -1007,11 +1009,11 @@ class BombermanGame
     elsif sound.is_a?(Symbol)
       case sound
       when :ExplosionUp
-        @args.state.settings.play_sound("sounds/flame on2.wav")
+        @args.state.settings.play_sound("sounds/flame_on2.wav")
       when :BombUp
         @args.state.settings.play_sound("sounds/dynamite4.wav")
       when :SpeedUp
-        @args.state.settings.play_sound("sounds/speed up.wav")
+        @args.state.settings.play_sound("sounds/speed_up.wav")
       end
     end
   end
